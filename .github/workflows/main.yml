@@ -2,8 +2,8 @@ name: Generate Spamhaus DROP List for MikroTik
 
 on:
   schedule:
-    - cron: '0 0 * * *'  # Bu cron her gün 00:00'da çalışacak
-  workflow_dispatch:  # Manuel tetikleme desteği
+    - cron: '0 0 */2 * *'
+  workflow_dispatch:
 
 jobs:
   generate-drop-list:
@@ -29,7 +29,7 @@ jobs:
           # Subnet bilgisini al
           subnet=$(echo "$line" | awk '{print $1}')
           
-          echo "add list=blacklist address=$subnet comment=SpamHaus" >> $output_file
+          echo "add list=SpamHaus address=$subnet" >> $output_file
         done
 
         cat $output_file
